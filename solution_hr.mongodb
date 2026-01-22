@@ -1,55 +1,69 @@
+db = db.getSiblingDB("hrDB")
 
+/* -----------------------------
+   PART 1: CREATE
+----------------------------- */
 
-db=db.getSiblingDB("hrDB")
-
-
-
-db.employees.insertone({
-name: "Alice Johnson",
-Department: "Management",
-Salary: 85,000,
-Position: "HR Manager",
-Experience: 10
+db.employees.insertOne({
+  name: "Alice Johnson",
+  department: "Management",
+  salary: 85000,
+  position: "HR Manager",
+  experience: 10
 })
 
+db.employees.insertMany([
+  {
+    name: "Bob Smith",
+    department: "IT",
+    position: "Developer",
+    salary: 60000,
+    experience: 4
+  },
+  {
+    name: "Charlie Brown",
+    department: "IT",
+    position: "Senior Developer",
+    salary: 72000,
+    experience: 7
+  },
+  {
+    name: "Diana Prince",
+    department: "Marketing",
+    position: "Intern",
+    salary: 45000,
+    experience: 0
+  }
+])
 
+/* -----------------------------
+   PART 2: READ
+----------------------------- */
 
-db.employees.insertmany({
-(name:"Bob Smith",department:"IT",position:"Developer",Salary:60,000, Exp: 4)
-(name:"Charlie Brown",department:"IT",position:"Senior Developer",Salary: 72,000, Exp: 7)
-(name:"Diana Prince",department: "Marketing",position:"Intern",Salary: 45,000, Exp: 0)
-)}
+db.employees.find()
 
+db.employees.find({ salary: { $gt: 70000 } })
 
-
-
-db.employees.find().pretty()
-
-
-db.employees.find({salary:{$gt:70000}})
-
-
-db.employees.find({name:"Bob Smith"})
-
+db.employees.find({ name: "Bob Smith" })
 
 db.employees.find(
   { department: "IT" },
   { _id: 0, name: 1, salary: 1 }
 )
 
-
+/* -----------------------------
+   PART 3: UPDATE
+----------------------------- */
 
 db.employees.updateOne(
   { name: "Alice Johnson" },
   { $set: { salary: 90000 } }
 )
 
-
 db.employees.updateMany(
   { department: "IT" },
   { $set: { department: "Engineering" } }
 )
-
 
 db.employees.replaceOne(
   { name: "Diana Prince" },
@@ -62,37 +76,31 @@ db.employees.replaceOne(
   }
 )
 
+/* -----------------------------
+   PART 4: ADVANCED QUERIES
+----------------------------- */
 
+db.employees.find({
+  department: { $in: ["Management", "Engineering"] }
+})
 
-db.employees.find(
-  { department: { $in: ["Management", "Engineering"] } }
-)
+db.employees.find({
+  $and: [
+    { experience: { $gt: 5 } },
+    { salary: { $gt: 70000 } }
+  ]
+})
 
-db.employees.find(
-  {
-    experience: { $gt: 5 },
-    salary: { $gt: 70000 }
-  }
-)
+db.employees.find({
+  position: { $ne: "Intern" }
+})
 
+/* -----------------------------
+   PART 5: DELETE & RESET
+----------------------------- */
 
+db.employees.deleteOne({ name: "Bob Smith" })
 
-db.employees.find(
-  { position: { $ne: "Intern" } }
-)
-
-
-
-
-db.employees.deleteOne(
-  { name: "Bob Smith" }
-)
-
-
-
-db.employees.deleteMany(
-  { department: "Marketing" }
-)
-
+db.employees.deleteMany({ department: "Marketing" })
 
 db.employees.deleteMany({})
