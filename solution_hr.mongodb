@@ -5,7 +5,7 @@ db = db.getSiblingDB("hrDB")
 ----------------------------- */
 
 db.employees.insertOne({
-  name: "Deep",
+  name: "Alice Johnson",
   department: "Management",
   salary: 85000,
   position: "HR Manager",
@@ -14,21 +14,21 @@ db.employees.insertOne({
 
 db.employees.insertMany([
   {
-    name: "MIT",
+    name: "Bob Smith",
     department: "IT",
     position: "Developer",
     salary: 60000,
     experience: 4
   },
   {
-    name: "Charlie Kirk",
+    name: "Charlie Brown",
     department: "IT",
     position: "Senior Developer",
     salary: 72000,
     experience: 7
   },
   {
-    name: "Sean John Combs",
+    name: "Diana Prince",
     department: "Marketing",
     position: "Intern",
     salary: 45000,
